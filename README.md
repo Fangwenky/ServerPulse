@@ -1,71 +1,73 @@
 # 💻 ServerPulse - 服务器监控面板
 
-> 轻量级服务器监控解决方案
+> 一键部署，远程监控你的服务器
 
-## 🌟 功能
+## 🎯 目标
 
-- 🖥️ **实时监控** - CPU、内存、磁盘、网络
-- 📈 **历史趋势** - 了解资源使用变化
-- 🔥 **进程监控** - 查看占用资源最多的进程
-- 🌐 **远程监控** - 通过 Agent 监控多台服务器
-
-## 🏗️ 架构
-
-```
-┌─────────────────┐     ┌─────────────────┐
-│  ServerPulse    │────▶│   Dashboard     │
-│    Agent        │     │   (Web界面)     │
-│  (数据采集)      │     │   (展示)        │
-└─────────────────┘     └─────────────────┘
-```
-
-## 🚀 快速开始
-
-### 方式一：本地监控（推荐）
-
-```bash
-# 安装依赖
-pip install psutil streamlit
-
-# 启动面板
-streamlit run dashboard.py
-```
-
-然后打开 http://localhost:8501
-
-### 方式二：监控远程服务器
-
-在远程服务器上安装 Agent：
-
-```bash
-# 安装依赖
-pip install psutil
-
-# 启动 Agent
-python agent.py
-```
-
-Agent 会每10秒采集数据并保存到 `server_metrics.json`
+在服务器上部署 ServerPulse，通过任意设备远程监控服务器状态。
 
 ## 📦 文件说明
 
 | 文件 | 说明 |
 |------|------|
-| `dashboard.py` | Streamlit 监控面板 |
-| `agent.py` | 数据采集代理 |
-| `index.html` | 纯前端演示版 |
+| `dashboard.py` | Streamlit 监控面板（需要安装） |
+| `agent.py` | 数据采集 Agent |
+| `requirements.txt` | Python 依赖 |
 
-## 🔧 技术栈
+## 🚀 快速部署
 
-- Python 3
+### 1. 安装依赖
+
+```bash
+pip install -r requirements.txt
+```
+
+### 2. 启动面板
+
+```bash
+streamlit run dashboard.py --server.port 8080 --server.address 0.0.0.0
+```
+
+### 3. 远程访问
+
+- **局域网**: http://[服务器IP]:8080
+- **Tailscale**: http://[Tailscale IP]:8080
+- **公网**: 需要配置端口转发或 VPN
+
+## 📱 远程访问设置
+
+### 方案1: Tailscale（推荐）
+
+1. 服务器安装 Tailscale
+2. 获取 Tailscale IP（如 100.105.184.113）
+3. 从任意设备访问 http://100.105.184.113:8080
+
+### 方案2: 端口映射
+
+路由器上映射端口 8080 → 服务器 IP
+
+## 📊 功能
+
+- 🖥️ CPU 使用率（实时）
+- 💾 内存使用情况
+- 💿 磁盘使用情况
+- 📊 系统负载
+- 📡 网络流量
+- 🔥 Top 5 进程
+- 🔧 系统信息
+- ⏰ 自动刷新
+
+## 🛠️ 技术栈
+
+- Python 3.8+
 - psutil - 系统信息采集
 - Streamlit - Web 界面
 
-## 📝 要求
+## ⚠️ 注意
 
-- Python 3.8+
-- psutil
-- streamlit (仅面板)
+- 需要服务器有 Python 环境
+- 需要稳定的网络连接
+- 建议配合 Tailscale 或 VPN 使用
 
 ---
 
